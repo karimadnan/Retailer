@@ -16,8 +16,15 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import CheckPrice from '../components/checkPrice/checkPrice';
+import NewOrder from '../components/newOrder/newOrder';
+import ScanProduct from '../components/newOrder/scanOrderProduct';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import local from '../local.json';
+import AddNewProduct from '../components/addNewProduct/addNewProduct';
+import Storage from '../components/storage/storage';
+import ViewProduct from '../components/storage/viewProduct';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -37,12 +44,22 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+    <Stack.Navigator screenOptions={{
+          animation: 'slide_from_right',
+          gestureEnabled: true,
+          headerTitleAlign: 'center'
+        }}>
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false, title: local.zumbaleta }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
+      <Stack.Screen name="CheckPrice" component={CheckPrice} options={{ title: local.checkPrice }} />
+      <Stack.Screen name="NewOrder" component={NewOrder} options={{ title: local.newOrder }} />
+      <Stack.Screen name="ScanProduct" component={ScanProduct} options={{ title: local.addCartProduct }} />
+      <Stack.Screen name="AddNewProduct" component={AddNewProduct} options={{ title: local.addNewProduct }} />
+      <Stack.Screen name="Storage" component={Storage} options={{ title: local.storage }} />
+      <Stack.Screen name="ViewProduct" component={ViewProduct} options={{ title: local.viewProduct }} />
     </Stack.Navigator>
   );
 }
@@ -61,13 +78,15 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerTitleAlign: 'center',
+        headerTitleStyle: { fontSize: 30, fontWeight: 'bold'}
       }}>
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: local.zumbaleta,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -88,8 +107,8 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: local.storage,
+          tabBarIcon: ({ color }) => <TabBarIcon name="dropbox" color={color} />,
         }}
       />
     </BottomTab.Navigator>
