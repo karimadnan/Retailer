@@ -1,6 +1,6 @@
 import { RootStackScreenProps } from '../../types';
 
-export interface StorageProductProps {
+export interface StorageProduct {
     id: string;
     name: string;
     stock: number;
@@ -8,6 +8,17 @@ export interface StorageProductProps {
     image?: string;
 }
 
-export type StorageProductsProps = { data: StorageProductProps[]} & RootStackScreenProps<'Storage'>;
+export interface EditStorageProduct {
+    name?: string;
+    stock?: number;
+    price?: number;
+}
+
+export interface EditProductProps {
+    product: StorageProduct,
+    setEditing: (state: boolean) => void;
+}
+
+export type StorageProductsProps = { data: StorageProduct[]} & RootStackScreenProps<'Storage'>;
 
 

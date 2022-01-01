@@ -7,7 +7,7 @@ import Barcode from './barcode';
 import ProductCount from './productCount';
 import ProductImage from './productImage';
 import { usePrimaryColor, usePrimaryColors } from '../Themed';
-
+import ActionButton from '../actionButton/actionButton';
 
 const AddNewProduct: FC = () => {
     const [barcode, setBarcode] = useState<string>('');
@@ -31,14 +31,9 @@ const AddNewProduct: FC = () => {
                 <ProductCount />
                 <ProductImage />
                 <Pressable onPress={() => console.log('f')}>
-                <View style={styles.addProductButton}>
-                    <FontAwesome size={30} color={primaryColor} name={'check'} />
-                    <Text 
-                        style={styles.labelPlaceholder}
-                        {...primaryColors}>
-                            {local.addNewProduct}
-                    </Text>
-                </View>
+                    <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 20 }}>
+                        <ActionButton title={local.addNewProduct} iconColor={primaryColors} textColor={primaryColors} icon='check' />
+                    </View>
                 </Pressable>
             </SafeAreaView>
         </View>

@@ -35,5 +35,8 @@
     "searchProducts": "بحث فى المنتجات",
     "viewProduct": "تفقد المنتج",
     "editStorageProduct": "تعديل المنتج",
-    "removeStorageProduct": "ازالة المنتج"
+    "removeStorageProduct": "ازالة المنتج",
+    "loading": "جارى التحميل",
+    "confirmEditProduct": "تأكيد التعديل ",
+    "declineEditProduct": "الغاء التعديل"
 }

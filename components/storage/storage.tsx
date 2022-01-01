@@ -7,12 +7,15 @@ import StorageHeader from './storageHeader';
 import { usePrimaryColor } from '../Themed';
 import StorageProducts from './storageProducts';
 import { RootStackScreenProps } from '../../types';
+import Loader from '../loader/loader';
 
 const Storage: FC<RootStackScreenProps<'Storage'>> = ({ navigation, route }) => {
     const primaryColor = usePrimaryColor();
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
         <View style={{ flex: 1 }}>
+            <Loader loading={loading}/>
             <StorageHeader />
             <View style={{ ...styles.searchBar, borderColor: primaryColor }}>
                 <Pressable>
@@ -28,7 +31,7 @@ const Storage: FC<RootStackScreenProps<'Storage'>> = ({ navigation, route }) => 
             <StorageProducts data={[{
                 id: '0',
                 name: 'كاتل الحلبيسشلبببببببببببببببffffffffffffffببببببببببببببببببببببببببببببببببببببببببب',
-                stock: 10,
+                stock: 100000000000,
                 price: 200,
                 image: 'https://images-na.ssl-images-amazon.com/images/I/610ytjrBknL.__AC_SX300_SY300_QL70_ML2_.jpg'
             },

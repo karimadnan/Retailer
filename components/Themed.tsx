@@ -45,9 +45,11 @@ type ThemeProps = {
   darkColor?: string;
 };
 
+type PressableExtraProps  = { disabled?: boolean };
+
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
-export type PressableProps = ThemeProps & DefaultPressableProps;
+export type PressableProps = ThemeProps & DefaultPressableProps & PressableExtraProps;
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 
 export function Text(props: TextProps) {
@@ -65,9 +67,11 @@ export function View(props: ViewProps) {
 }
 
 export function Pressable(props: PressableProps) {
+  const { disabled } = props;
+
   return <DefaultPressable 
           style={({ pressed }) => ({
-            transform: [{ scale: pressed ? 0.9 : 1 }]
+            transform: [{ scale: !disabled ? pressed ? 0.9 : 1 : 1}]
           })} {...props} 
         />
 }

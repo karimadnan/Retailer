@@ -1,32 +1,36 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Text, View, Pressable, TextInput } from '../Themed';
-import { StyleSheet, Image, FlatList } from 'react-native';
+import { StyleSheet, Image, Modal, Alert } from 'react-native';
 import local from '../../local.json';
 import { usePrimaryColors, usePrimaryColor } from '../Themed';
 import { RootStackScreenProps } from '../../types';
-import { StorageProductProps } from './types';
+import { StorageProduct } from './types';
 import ActionButton from '../actionButton/actionButton';
+import Loader from '../loader/loader';
+import EditProduct from './editProduct';
 
 const ViewProduct: FC<RootStackScreenProps<'ViewProduct'>> = 
 ({navigation, route: { params }}) => {
-    const [tempProduct, setTempProduct] = useState<StorageProductProps>({
-        id: '',
-        name: '',
-        stock: 0,
-        price: 0
-    });
+    const [editing, setEditing] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const product = params?.product;
     const primaryColors = usePrimaryColors();
     const deleteColors = {lightColor: '#FF5959', darkColor: '#fff'};
 
-    useEffect(() => {
-        if (product) {
-            setTempProduct(product);
-        }
-    }, [])
-
     return (
         <View style={styles.container}>
+            <Loader loading={loading}/>
+             <Modal
+                animationType="slide"
+                transparent={true}
+                visible={editing}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setEditing(!editing);
+                }}
+            >
+                <EditProduct product={product} setEditing={setEditing}/>
+            </Modal>
             <View style={styles.imageContainer}>
                 <Image resizeMode='contain' style={styles.productImage} source={{ uri: product?.image }}/>
             </View>
@@ -44,7 +48,9 @@ const ViewProduct: FC<RootStackScreenProps<'ViewProduct'>> =
                     </View>
                 </View>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <ActionButton title={local.editStorageProduct} icon='edit'/>
+                    <Pressable onPress={() => setEditing(true)}>
+                        <ActionButton title={local.editStorageProduct} icon='edit'/>
+                    </Pressable>
                     <ActionButton title={local.removeStorageProduct} icon='trash' iconColor={deleteColors} textColor={deleteColors}/>
                 </View>
         </View>
@@ -54,7 +60,7 @@ const ViewProduct: FC<RootStackScreenProps<'ViewProduct'>> =
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     imageContainer: {
         alignItems: 'center'

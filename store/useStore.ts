@@ -1,15 +1,8 @@
 import create, { SetState, GetState } from 'zustand'
-import produce from 'immer'
-import { Product, StoreState } from './types'
-import Cart from '../components/cart/cart';
+import { StoreState } from './types'
 
 const useStore = create<StoreState>((set: SetState<StoreState>, get: GetState<StoreState>) => ({
-  cart: [{
-      id: '1',
-      name: 'مقشة',
-      count: 1,
-      price: 20
-  }],
+  cart: [],
   addCartItem: (product) => {
       const { cart } = get();
       const getProduct = cart.find((f) => f.id === product.id);
