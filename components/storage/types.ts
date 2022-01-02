@@ -16,6 +16,7 @@ export interface EditStorageProduct {
 
 export interface EditProductProps {
     product: StorageProduct,
+    onEdit: (product: EditStorageProduct) => void;
     setEditing: (state: boolean) => void;
 }
 

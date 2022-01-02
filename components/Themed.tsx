@@ -45,11 +45,9 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-type PressableExtraProps  = { disabled?: boolean };
-
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
-export type PressableProps = ThemeProps & DefaultPressableProps & PressableExtraProps;
+export type PressableProps = ThemeProps & DefaultPressableProps;
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 
 export function Text(props: TextProps) {

@@ -1,21 +1,20 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Text, View, Pressable, TextInput } from '../Themed';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInputChangeEventData, NativeSyntheticEvent } from 'react-native';
 import local from '../../local.json';
 import { usePrimaryColors, usePrimaryColor } from '../Themed';
 import ActionButton from '../actionButton/actionButton';
 import { EditProductProps } from './types';
 import { EditStorageProduct } from './types';
 
-const EditProduct: FC<EditProductProps> = ({ product, setEditing }) => {
-    const [tempProduct, setTempProduct] = useState<EditStorageProduct | null>(null);
+const EditProduct: FC<EditProductProps> = ({ product, setEditing, onEdit }) => {
+    const [tempProduct, setTempProduct] = useState<EditStorageProduct>({});
     const primaryColors = usePrimaryColors();
     const deleteColors = {lightColor: '#FF5959', darkColor: '#fff'};
+    const isDisabled = Object.keys(tempProduct).length < 1;
 
-    const handleUpdateProduct = () => {
-        if (tempProduct !== null) {
-            setEditing(false);
-        }
+    const handleOnChange = (text: string) => {
+
     }
 
     return (
@@ -23,19 +22,31 @@ const EditProduct: FC<EditProductProps> = ({ product, setEditing }) => {
             <View style={styles.modalView}>
                 <View style={styles.formContainer}>
                     <Text style={styles.label}>{local.productName}</Text>
-                    <TextInput style={styles.input} {...primaryColors} value={product?.name} />
+                    <TextInput
+                        onChangeText={handleOnChange}
+                        style={styles.input} 
+                        {...primaryColors} 
+                        value={product?.name} />
 
                     <Text style={styles.label}>{local.productsCount}</Text>
-                    <TextInput style={styles.input} {...primaryColors} value={product?.stock.toString()} />
+                    <TextInput
+                        onChangeText={handleOnChange}
+                        style={styles.input} 
+                        {...primaryColors}
+                        value={product?.stock.toString()} />
 
                     <Text style={styles.label}>{local.price}</Text>
-                    <TextInput style={styles.input} {...primaryColors} value={product?.price.toString()}/>
+                    <TextInput
+                        onChangeText={handleOnChange}
+                        style={styles.input} 
+                        {...primaryColors} 
+                        value={product?.price.toString()}/>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <Pressable onPress={() => handleUpdateProduct() } disabled={!tempProduct}>
+                    <Pressable onPress={() => onEdit(tempProduct)} disabled={isDisabled}>
                         <ActionButton 
                             title={local.confirmEditProduct} 
-                            disabled={!tempProduct}
+                            disabled={isDisabled}
                             icon='check'
                             iconSize={25} 
                             textSize={20} />
